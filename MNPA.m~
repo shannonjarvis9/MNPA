@@ -45,14 +45,13 @@ end
 %-------------------------------------------------------------------------- 
 % To plot the magnitude of the output voltage:
 %-------------------------------------------------------------------------- 
-figure('Name','Circuit Response');  %Optional
-subplot(2,2,1);
+figure('Name','Input Response');  %Optional
 plot(Vin, Vout,'LineWidth',3);
 hold on;
 plot(Vin, V3,'LineWidth',3);
 grid;
 legend('Output voltage', 'Node 3 voltage');
-title('Voltage Response', 'FontSize',14);
+title('Input Response', 'FontSize',14);
 xlabel('Input Voltage (V)','FontSize',20);
 ylabel('Voltage  (Volts)','FontSize',20);
 
@@ -86,8 +85,7 @@ gain = 20*log(abs(Vout/b(6)));
 %-------------------------------------------------------------------------- 
 % To plot the magnitude of the output voltage:
 %-------------------------------------------------------------------------- 
-%figure('Name','Frequency Response');  %Optional
-subplot(2,2,2);
+figure('Name','Frequency Response');  %Optional
 plot(2*pi*F, abs(Vout),'LineWidth',3);
 hold on; 
 plot(2*pi*F, gain,'LineWidth',3);
@@ -95,7 +93,7 @@ grid;
 title('Frequency Response of |V_{out}|  ', 'FontSize',14);
 legend('|V_{out}|', 'Gain (V_{out}/V_{in})'); 
 xlabel('w  (rad/s)','FontSize',20);
-ylabel('Voltage  (Volts)','FontSize',20);
+ylabel('V  (Volts)','FontSize',20);
 hold off;
 
 % figure('Name','Frequency Response - Gain');  %Optional
@@ -116,18 +114,17 @@ hold off;
 b(6) = 1;
 w = pi;
 s = i*w;
-C_val = 0.25; 
 
 for n=1:Nrpt
 
     pertub = 0.05*randn; 
     
     %Only adding pertibation to C (col, row 1 and 2 in C matrix)
-    changed_val = C_val + pertub;
-    C(1,1) = changed_val;
-    C(1,2) = changed_val;
-    C(2,1) = -changed_val;
-    C(2,2) = -changed_val; 
+    changed
+    C(1,1) = C(1,1) + pertub;
+    C(1,2) = C(1,2) + pertub;
+    C(2,1) = C(2,1) + pertub;
+    C(2,2) = C(2,2) + pertub; 
     
     A = (G+s*C);
  
@@ -140,8 +137,7 @@ end
 
 gain = abs(Vout/b(6));
 
-%figure('Name','Pertubation');  %Optional
-subplot(2,2,3);
+figure('Name','Pertubation Response');  %Optional
 histogram(pretubation);
 grid;
 title('Random pertubation', 'FontSize',14);
@@ -149,12 +145,11 @@ xlabel('Pretubation','FontSize',20);
 ylabel('Frequency','FontSize',20);
 
 
-%figure('Name','Gain Pertubation');  %Optional
-subplot(2,2,4);
+figure('Name','Frequency Response - Gain Pertubation');  %Optional
 histogram(gain);
 grid;
-title('Histogram of Pretubations of V_{out}/V_{in} ', 'FontSize',14);
-xlabel('Gain (V)','FontSize',20);
+title('Frequency Response of |V_{out}/V_{in}| ', 'FontSize',14);
+xlabel('Gain (dB)','FontSize',20);
 ylabel('Frequency','FontSize',20);
 
 
